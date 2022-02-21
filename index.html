@@ -3,30 +3,40 @@
     <head>
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Karla:wght@200;400;700&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="index.css">
     </head>
     
     <body>
         <header>
             <nav>
-                <h3>Bob Loblaw's Law Blog (Latin version)</h3>
+                <h3>Container ETA</h3>
             </nav>
         </header>
 
         <form id="new-post">
-            <label for="post-title">Title:</label>  
+            <label for="post-title">Container ID:</label>  
             <input id="post-title" type="text">      
-            <label for="post-body">Body:</label>
-            <textarea id="post-body"></textarea>
+            <label for="post-body">Shipping Line:</label>
+            <input id="post-body" type="text">
             <button>Submit Post</button>
         </form>
-        <section id="container-center">
-                
-                <div>
-                    <ul id="blog-list"></ul>
-                </div>
-                <hr>
-                
+    
+
+        <section class="table-section">
+            <h3>Saved entries:</h3>
+            <table >
+                <thead>
+                    <tr>
+                        <th>Container ID</th>
+                        <th>Shipping Line</th>
+                        <th>ETA</th>
+                    </tr>
+                </thead>
+                <tbody id="saved-display">
+                </tbody>
+            </table>
+            <button id="update-eta">Update ETA</button>
+            <button id="delete-last-entry">Delete Last Entry</button>
         </section>
         
        
@@ -36,3 +46,4 @@
     </body>
 
 </html>
+
