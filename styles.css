@@ -1,0 +1,96 @@
+body {
+    font-family: 'Karla', sans-serif;
+    color: rgb(250, 237, 221);
+    margin: 0;
+    padding: 0;
+}
+
+nav {
+    background-color: bisque;
+    padding: 7px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    position: fixed;
+    width: 100%;
+}
+
+nav > h3 {
+    margin: 0;
+    color: rosybrown
+}
+
+hr {
+    width: 70%;
+    margin-top: 15px;
+    border: 0.1px solid bisque;
+}
+
+form {
+    margin: 0 auto;
+    padding: 100px 10px 10px;
+    width: 33%;
+    display: flex;
+    flex-direction: column;
+    /* background-color: rosybrown; */
+    font-family: 'Karla', sans-serif;
+    color: rgb(97, 95, 95);   
+}
+
+input#post-title, textarea#post-body {
+    margin-bottom: 10px;
+    
+}
+
+button {
+    margin: 0 auto;
+    max-width: 50%;
+    font-family: 'Karla', sans-serif;
+    color: rgb(97, 95, 95);   
+}
+
+#container-center {
+    padding: 10px;
+}
+
+#blog-list {
+    padding: 60px 10px 10px;
+}
+
+ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+     
+li {
+    list-style: none;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+}
+            
+.blog-card {
+    background-color: rosybrown;
+    border-radius: 5px;
+    box-shadow: 6px 7px 8px 1px rgba(117,117,117,0.7)
+;
+    margin: 10px;
+}
+
+.blockquote {
+    background-color: whitesmoke; 
+    border-radius: 5px;
+    color: grey;   
+    box-shadow: 0px 7px 8px 3px rgba(114,108,89,0.49);
+    padding: 1em;
+    font-style: italic;
+    min-height: 250px
+    /* height: 300px; */
+}
+
+.blockquote-title {
+    padding: 10px 20px;
+    color: rgb(250, 237, 221);
+    height: 50px;   
+}
