@@ -4,9 +4,7 @@
 // without waiting for stylesheets, images, and subframes to finish loading.'
 // In effect, start fetching once HTML is loaded, cos it needs the `ul` to be there, but don't need to wait for CSS and images.
 
-//////////////////////////////////////////        
-// 1. fetch to GET the placeholder data //
-////////////////////////////////////////// 
+
 
 const savedDisplay = document.getElementById("saved-display")
 const updateEtaBtn = document.getElementById("update-eta")
@@ -14,6 +12,102 @@ const updateEtaBtn = document.getElementById("update-eta")
 let containerID = ''
 let ship = ''
 let eta = ''
+
+////////////////////////////////////////////////////////////////////////////        
+// 1. POST container no. and shipping line in order to receive Request ID //
+//////////////////////////////////////////////////////////////////////////// 
+
+let entries = []
+const form = document.getElementById("new-post")
+
+// function handleSubmit(event) {
+//     event.preventDefault();
+//     const formData = new FormData(event.target);
+//     const asString = new URLSearchParams(formData).toString();
+//     console.log(asString);
+//   }
+
+function handleSubmit(e) {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const params = new URLSearchParams(formData)
+    fetch('https://shipsgo.com/api/ContainerService/PostContainerInfo/', {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: params    
+    })
+    .then((response) => response.json())
+      .then((responseData) => {
+          console.log(JSON.stringify(responseData));
+      }).catch(err=>{console.log(err)})
+    
+}
+
+form.addEventListener('submit', handleSubmit);
+
+// form.addEventListener('submit', async (e) => {
+
+//     // stops page refreshing on submit
+//     e.preventDefault() 
+
+//     const formData = new FormData(form);
+//     try {
+//         await fetch('https://shipsgo.com/api/ContainerService/PostContainerInfo/',{
+//             method: 'POST',
+//             headers: {
+//                 'Content-Type': 'application/x-www-form-urlencoded'
+//             },
+//             body: new URLSearchParams(Object.fromEntries(formData))
+//         })
+//     } catch (err) {
+//         console.log(err)
+//     }
+//     renderTable()
+    
+// })
+
+let leadsLocalStorage = JSON.parse( localStorage.getItem("entries") )
+
+if (leadsLocalStorage) {
+    entries = leadsLocalStorage
+    renderTable()
+}
+
+
+
+// delete last entry in local storage with DOUBLE click
+const deleteLastBtn = document.getElementById("delete-last-entry")
+
+deleteLastBtn.addEventListener("dblclick", function() {
+    entries.pop()
+    localStorage.setItem("entries", JSON.stringify(entries))
+    renderTable()
+    // console.log(entries)
+    // console.log( localStorage.getItem("entries") )
+
+})
+
+function renderTable() {
+    let entriesHTML = ''
+    for (i = 0; i < entries.length; i ++) {
+    entriesHTML += 
+        `
+            <tr>
+                <td>${entries[i].containerID}</td>
+                <td>${entries[i].ship}</td>
+                <td>${entries[i].eta}</td>
+            </tr>  
+        `
+    }
+    savedDisplay.innerHTML = entriesHTML
+    // console.log(entries[0].containerID)
+}
+
+/////////////////////////////////////////////////////////////////////////        
+// 2. GET current arrival ETA by using previously requested Request ID //
+///////////////////////////////////////////////////////////////////////// 
 
 const fetchEta = async function() {
     await Promise.all(
@@ -44,64 +138,4 @@ const fetchEta = async function() {
 updateEtaBtn.addEventListener('click', fetchEta)
 
 
-let entries = []
-const form = document.getElementById("new-post")
 
-form.addEventListener('submit', function(e) {
-
-    e.preventDefault() // stops page refreshing on submit
-    let containerID = document.getElementById("post-title").value
-    let ship = document.getElementById("post-body").value
-    
-    // const data = {
-    //     ContainerNumber: postTitle, // again, title and body must match what server has for keys
-    //     ship: postBody
-    // }
-
-    let entryObj = {
-        containerID,
-        ship,
-        eta
-    }
-    entries.push(entryObj)
-    localStorage.setItem("entries", JSON.stringify(entries))
-    
-    console.log(entryObj)
-    console.log(entries)
-    renderTable()
-
-})
-
-let leadsLocalStorage = JSON.parse( localStorage.getItem("entries") )
-
-if (leadsLocalStorage) {
-    entries = leadsLocalStorage
-    renderTable()
-}
-
-const deleteLastBtn = document.getElementById("delete-last-entry")
-
-deleteLastBtn.addEventListener("dblclick", function() {
-    entries.pop()
-    localStorage.setItem("entries", JSON.stringify(entries))
-    renderTable()
-    console.log(entries)
-    console.log( localStorage.getItem("entries") )
-
-})
-
-function renderTable() {
-    let entriesHTML = ''
-    for (i = 0; i < entries.length; i ++) {
-    entriesHTML += 
-        `
-            <tr>
-                <td>${entries[i].containerID}</td>
-                <td>${entries[i].ship}</td>
-                <td>${entries[i].eta}</td>
-            </tr>  
-        `
-    }
-    savedDisplay.innerHTML = entriesHTML
-    // console.log(entries[0].containerID)
-}

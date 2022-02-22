@@ -3,7 +3,7 @@
     <head>
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Karla:wght@200;400;700&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="index.css">
+        <link rel="stylesheet" href="styles.css">
     </head>
     
     <body>
@@ -14,10 +14,11 @@
         </header>
 
         <form id="new-post">
-            <label for="post-title">Container ID:</label>  
-            <input id="post-title" type="text">      
-            <label for="post-body">Shipping Line:</label>
-            <input id="post-body" type="text">
+            <input type="hidden" id="myApiKey" name="authCode" value="2e4bfc6af6a84620951449e42c43cd25">
+            <label for="containerNumber">Container ID:</label>  
+            <input id="containerNumber" name="containerNumber" type="text">      
+            <label for="shippingLine">Shipping Line:</label>
+            <input id="shippingLine" name="shippingLine" type="text">
             <button>Submit Post</button>
         </form>
     
